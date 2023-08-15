@@ -13,29 +13,40 @@
             return accessToken;
         }
 
-        // Function to make an HTTP call using the extracted access token
+        // Function to make an HTTP POST call using the extracted access token
         function makeApiCall(accessToken) {
             var apiUrl = "https://hjoc5no105.execute-api.eu-north-1.amazonaws.com/dynamo";
             
             // Construct the request headers with the access token
             var headers = {
-                "Authorization": "Bearer " + accessToken
+                "Authorization": "Bearer " + accessToken,
+                "Content-Type": "application/json" // Set the content type for the request
             };
+            
+            // Request body for the POST request
+            var requestBody = JSON.stringify({
+                key1: "value1",
+                key2: "value2"
+            });
 
-            // Make the HTTP call
-            fetch(apiUrl, { headers })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("API Response:", data);
-                    // Handle the API response data here
-                    // For example, update the UI with the received data
-                    document.getElementById("apiResponse").textContent = JSON.stringify(data, null, 2);
-                })
-                .catch(error => {
-                    console.error("API Error:", error);
-                    // Display error message in the UI
-                    document.getElementById("apiResponse").textContent = "Error fetching data from API";
-                });
+            // Make the HTTP POST call
+            fetch(apiUrl, {
+                method: "POST",
+                headers: headers,
+                body: requestBody
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("API Response:", data);
+                // Handle the API response data here
+                // For example, update the UI with the received data
+                document.getElementById("apiResponse").textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error("API Error:", error);
+                // Display error message in the UI
+                document.getElementById("apiResponse").textContent = "Error fetching data from API";
+            });
         }
 
         // Extract access token and make API call when the page loads
