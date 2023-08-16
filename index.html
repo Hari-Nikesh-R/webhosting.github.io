@@ -20,10 +20,10 @@
             // Construct the request headers with the access token
             var headers = {
                 "Authorization": "Bearer " + accessToken,
-                "Content-Type": "application/json", // Set the content type for the request
-                'Access-Control-Allow-Origin': 'https://hari-nikesh-r.github.io',
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': 'Content-Type,Authorization',
-                'Access-Control-Allow-Methods': 'GET,POST,OPTIONS', // Add any other allowed methods
+                'Access-Control-Allow-Methods': 'GET,POST,OPTIONS', 
                 'Access-Control-Allow-Credentials': true
                 };
             
