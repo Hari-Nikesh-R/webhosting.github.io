@@ -20,8 +20,10 @@
             // Construct the request headers with the access token
             var headers = {
                 "Authorization": "Bearer " + accessToken,
-                "Content-Type": "application/json" // Set the content type for the request
-            };
+                "Content-Type": "application/json", // Set the content type for the request
+                'Access-Control-Allow-Origin':'*',
+                    'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+                };
             
             // Request body for the POST request
             var requestBody = JSON.stringify({
