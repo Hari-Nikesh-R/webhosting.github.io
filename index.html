@@ -21,8 +21,10 @@
             var headers = {
                 "Authorization": "Bearer " + accessToken,
                 "Content-Type": "application/json", // Set the content type for the request
-                'Access-Control-Allow-Origin':'*',
-                    'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+                'Access-Control-Allow-Origin': 'https://hari-nikesh-r.github.io',
+                'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+                'Access-Control-Allow-Methods': 'GET,POST,OPTIONS', // Add any other allowed methods
+                'Access-Control-Allow-Credentials': true
                 };
             
             // Request body for the POST request
