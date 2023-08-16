@@ -33,9 +33,8 @@
 
             // Make the HTTP POST call
             fetch(apiUrl, {
-                method: "POST",
+                method: "OPTIONS",
                 headers: headers,
-                body: requestBody
             })
             .then(response => response.json())
             .then(data => {
