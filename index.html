@@ -1,73 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Access Token Extractor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark DSA Task as Done</title>
+    <style>
+  body {
+   font-family: sans-serif;
+   background-color: #f4f4f4;
+  }
+
+   #requestForAssistance {
+            display: none;
+        }
+
+  .container {
+   max-width: 500px;
+   margin: 0 auto;
+   padding: 20px;
+   background-color: #fff;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   border-radius: 5px;
+   animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+  }
+
+  @keyframes fadeIn {
+   0% { opacity: 0; }
+   100% { opacity: 1; }
+  }
+
+  h1 {
+   color: #333;
+   text-align: center;
+  }
+
+  p {
+   color: #666;
+  }
+
+  input {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+  }
+
+  button {
+   background-color: #007bff;
+   color: #fff;
+   padding: 10px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+  }
+
+  .success {
+   color: green;
+  }
+
+  .error {
+   color: red;
+  }
+ </style>
 </head>
 <body>
-    <h1>Access Token Extractor</h1>
-    <script>
-        // Function to extract the access token from the URL hash fragment
-        function extractAccessToken() {
-            var hash = window.location.hash;
-            var accessToken = hash.match(/access_token=([^&]+)/)[1];
-            return accessToken;
-        }
+<div class="container">
+    <h1>Mark DSA Task as Done</h1>
+    <p>To mark your DSA task as done, please enter your email address below:</p>
 
-        // Function to make an HTTP POST call using the extracted access token
-        function makeApiCall(accessToken) {
-            var apiUrl = "https://hjoc5no105.execute-api.eu-north-1.amazonaws.com/dynamo";
-            
-            // Construct the request headers with the access token
-            var headers = {
-                "Authorization": "Bearer " + accessToken,
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type,Authorization',
-                'Access-Control-Allow-Methods': 'GET,POST,OPTIONS', 
-                'Access-Control-Allow-Credentials': true
-                };
-            
-            // Request body for the POST request
-            var requestBody = JSON.stringify({
-                key1: "value1",
-                key2: "value2"
-            });
+    <form id="taskForm">
+        <input type="email" name="email" placeholder="Enter your email address">
+        <input type="checkbox" name="requestForAssistance" id="requestForAssistance" value="false" checked>
+        <button type="submit">Submit</button>
+    </form>
 
-            // Make the HTTP POST call
-            fetch(apiUrl, {
-                method: "OPTIONS",
-                headers: headers,
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("API Response:", data);
-                // Handle the API response data here
-                // For example, update the UI with the received data
-                document.getElementById("apiResponse").textContent = JSON.stringify(data, null, 2);
-            })
-            .catch(error => {
-                console.error("API Error:", error);
-                // Display error message in the UI
-                document.getElementById("apiResponse").textContent = "Error fetching data from API";
-            });
-        }
-
-        // Extract access token and make API call when the page loads
-        document.addEventListener("DOMContentLoaded", function () {
-            var accessToken = extractAccessToken();
-            if (accessToken) {
-                console.log("Access Token:", accessToken);
-                makeApiCall(accessToken);
-            } else {
-                console.error("Access token not found in URL.");
-                // Display error message in the UI
-                document.getElementById("apiResponse").textContent = "Access token not found in URL";
-            }
-        });
-    </script>
-    <div>
-        <h2>API Response:</h2>
-        <pre id="apiResponse"></pre>
+    <div class="message">
+        <!-- This message will be updated depending on the success or failure of the form submission -->
     </div>
+</div>
+
+<script>
+  const form = document.querySelector('taskForm');
+  const message = document.querySelector('.message');
+  const params = new URLSearchParams(window.location.search);
+  const day = params.get('day');
+  console.log("day:", day);
+
+  form.addEventListener('submit', async (event) => {
+   event.preventDefault();
+
+   const email = document.getElementById('email');
+   console.log(email);
+
+   const response = await fetch('http//localhost:8081/userLearn/problems?day=${day}&email=${email}', {
+    method: 'GET',
+    headers: {
+     'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+   });
+
+   if (response.status === 200) {
+    window.location.href = 'TaskCompleted.html';
+   } else {
+    message.innerHTML = '<p class="error">An error occurred while marking your task as done.</p>';
+   }
+  });
+ </script>
 </body>
 </html>
