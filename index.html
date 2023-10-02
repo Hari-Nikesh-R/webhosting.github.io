@@ -82,28 +82,26 @@
 
 <script>
   const form = document.querySelector('#taskForm');
-  const message = document.querySelector('.message');
+const message = document.querySelector('.message');
 
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
- 
+  const emailInput = document.querySelector('input[name="email"]');
+  const email = emailInput.value; 
 
-  form.addEventListener('submit', async (event) => {
-   event.preventDefault();
-
-   const email = document.querySelector('input[name="email"]');
-   console.log(email);
-
-   const response = await fetch('https://dosmartie-api-services.onrender.com/userLearn/webPage?email=${email}&requestForAssistance=false', {
+  const response = await fetch(`https://dosmartie-api-services.onrender.com/userLearn/webPage?email=${email}&requestForAssistance=false`, {
     method: 'GET',
-   });
+  });
 
-   if (response.status === 200) {
+  if (response.status === 200) {
     console.log("Response status is 200")
     window.location.href = 'TaskCompleted.html';
-   } else {
+  } else {
     message.innerHTML = '<p class="error">An error occurred while marking your task as done.</p>';
-   }
-  });
+  }
+});
+
  </script>
 </body>
 </html>
