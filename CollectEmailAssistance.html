@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="text/html">
+    <title>Request for Assistance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+         #requestForAssistance {
+            display: none;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        p {
+            color: #666;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Request for Assistance</h1>
+    <p>If you need assistance, please provide your email address below, and we'll get back to you as soon as possible.</p>
+
+    <form id="assistanceForm">
+        <input type="email" name="email" id="emailInput" placeholder="Enter your email address" required>
+        <input type="checkbox" name="requestForAssistance" id="requestForAssistance" value="true" checked>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+        const assistanceForm = document.getElementById('assistanceForm');
+        const emailInput = document.getElementById('emailInput');
+
+        assistanceForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const userEmail = emailInput.value;
+            console.log(userEmail);
+
+            // Make an API call with the email as a parameter
+            fetch('http://localhost:8081/userLearn/problems?day=${day}&email=${email}&requestForAssistance=true', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("API successful");
+                    return response.json();
+                } else {
+                console.log("API Error");
+                    throw new Error('Failed to request assistance.');
+                }
+            })
+            .then(data => {
+                // Handle the API response data here
+                console.log(data);
+                window.location.href = 'RequestForAssistance.html';
+               // alert('Your request for assistance has been sent.');
+            })
+            .catch(error => {
+                console.error(error);
+                alert('There was an error requesting assistance.');
+            });
+        });
+    </script>
+</body>
+</html>
