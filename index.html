@@ -7,6 +7,7 @@
     <style>
   body {
    font-family: sans-serif;
+
    background-color: #f4f4f4;
   }
 
@@ -92,7 +93,7 @@
    const email = document.getElementById('email');
    console.log(email);
 
-   const response = await fetch('http//localhost:8081/userLearn/problems?day=${day}&email=${email}', {
+   const response = await fetch('https://dosmartie-api-services.onrender.com/userLearn/problems?day=${day}&email=${email}', {
     method: 'GET',
     headers: {
      'Content-Type': 'application/json',
