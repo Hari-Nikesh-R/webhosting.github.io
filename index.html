@@ -83,9 +83,9 @@
 <script>
   const form = document.querySelector('taskForm');
   const message = document.querySelector('.message');
-  const params = new URLSearchParams(window.location.search);
-  const day = params.get('day');
-  console.log("day:", day);
+
+
+ 
 
   form.addEventListener('submit', async (event) => {
    event.preventDefault();
@@ -102,6 +102,7 @@
    });
 
    if (response.status === 200) {
+    console.log("Response status is 200")
     window.location.href = 'TaskCompleted.html';
    } else {
     message.innerHTML = '<p class="error">An error occurred while marking your task as done.</p>';
