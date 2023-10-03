@@ -90,7 +90,7 @@
             .then(response => {
                 if (response.ok) {
                     console.log("API successful");
-                    return response.json();
+                    return response;
                 } else {
                 console.log("API Error");
                     throw new Error('Failed to request assistance.');
