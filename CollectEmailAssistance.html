@@ -81,7 +81,7 @@
             console.log(userEmail);
 
             // Make an API call with the email as a parameter
-            fetch('http://localhost:8081/userLearn/problems?day=${day}&email=${email}&requestForAssistance=true', {
+            fetch(`https://dosmartie-api-services.onrender.com/userLearn/webPage?email=${userEmail}&requestForAssistance=true`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -99,7 +99,8 @@
             .then(data => {
                 // Handle the API response data here
                 console.log(data);
-                window.location.href = 'RequestForAssistance.html';
+                window.location.href = 'https://hari-nikesh-r.github.io/webhosting.github.io/RequestForAssistance.html';
+        
                // alert('Your request for assistance has been sent.');
             })
             .catch(error => {
